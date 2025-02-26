@@ -1,7 +1,6 @@
 from crewai import Agent
 from textwrap import dedent
 from langchain_openai import ChatOpenAI
-from SprintSpark.tools.JiraIssueDataTool import get_issue_data
 
 
 class IssueAgents:
@@ -22,6 +21,5 @@ class IssueAgents:
             agents."""),
             allow_delegation=False,
             verbose=True,
-            tools=[get_issue_data],
             llm=self.OpenAIGPT4o,
         )

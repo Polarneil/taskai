@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import os
 import requests
 from requests.auth import HTTPBasicAuth
-from langchain_community.tools import tool
+from crewai.tools import tool
 
 load_dotenv()
 

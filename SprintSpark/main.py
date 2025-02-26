@@ -4,10 +4,17 @@ from dotenv import load_dotenv
 from textwrap import dedent
 from agents.agents import IssueAgents
 from tasks.tasks import IssueTasks
+from crewai.knowledge.source.string_knowledge_source import StringKnowledgeSource
 
 load_dotenv()
 
 os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
+
+# Create knowledge source
+directions = "You will NOT include triple backticks (```) in any of your inputs or outputs."
+direction_source = StringKnowledgeSource(
+    content=directions,
+)
 
 
 class SprintSparkCrew:
@@ -28,10 +35,15 @@ class SprintSparkCrew:
             self.ticket_key,
         )
 
+        decompose_issue_task = tasks.decompose_issue_task(
+            processor_router_agent
+        )
+
         # Define crew
         crew = Crew(
             agents=[processor_router_agent],
-            tasks=[fetch_issue_data_task],
+            tasks=[fetch_issue_data_task, decompose_issue_task],
+            knowledge_sources=[direction_source],
             verbose=True,
         )
 
