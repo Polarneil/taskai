@@ -2,8 +2,13 @@ from crewai import Crew
 import os
 from dotenv import load_dotenv
 from textwrap import dedent
-from agents.agents import IssueAgents
-from tasks.tasks import IssueTasks
+
+from agents.general_agents import IssueAgents
+from agents.technical_agents import TechnicalAgents
+
+from tasks.general_tasks import IssueTasks
+from tasks.technical_tasks import TechnicalTasks
+
 from crewai.knowledge.source.string_knowledge_source import StringKnowledgeSource
 
 load_dotenv()
@@ -11,7 +16,11 @@ load_dotenv()
 os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
 # Create knowledge source
-directions = "You will NOT include triple backticks (```) in any of your inputs or outputs."
+directions = dedent(
+    f"""
+    - You will NOT include triple backticks (```) in any of your inputs or outputs.
+    """
+)
 direction_source = StringKnowledgeSource(
     content=directions,
 )
@@ -23,26 +32,34 @@ class SprintSparkCrew:
 
     def run(self):
         # Instantiate agents and tasks
-        agents = IssueAgents()
-        tasks = IssueTasks()
+        general_agents = IssueAgents()
+        general_tasks = IssueTasks()
+
+        technical_agents = TechnicalAgents()
+        technical_tasks = TechnicalTasks()
 
         # Define agents
-        processor_router_agent = agents.processor_router_agent()
+        processor_router_agent = general_agents.processor_router_agent()
+        technical_analyst_agent = technical_agents.technical_analyst_agent()
 
         # Define tasks
-        fetch_issue_data_task = tasks.fetch_issue_data_task(
+        fetch_issue_data_task = general_tasks.fetch_issue_data_task(
             processor_router_agent,
             self.ticket_key,
         )
 
-        decompose_issue_task = tasks.decompose_issue_task(
+        decompose_issue_task = general_tasks.decompose_issue_task(
             processor_router_agent
+        )
+
+        analyze_repo_task = technical_tasks.delegate_subtasks_task(
+            technical_analyst_agent
         )
 
         # Define crew
         crew = Crew(
-            agents=[processor_router_agent],
-            tasks=[fetch_issue_data_task, decompose_issue_task],
+            agents=[processor_router_agent, technical_analyst_agent],
+            tasks=[fetch_issue_data_task, decompose_issue_task, analyze_repo_task],
             knowledge_sources=[direction_source],
             verbose=True,
         )
