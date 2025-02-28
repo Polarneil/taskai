@@ -31,7 +31,9 @@ class TechnicalTasks:
             ),
             expected_output=dedent(
                 f"""
-                Return a structured JSON assignment of subtasks and acceptance criteria to the appropriate SME agents. 
+                Return a structured JSON assignment of subtasks and acceptance criteria to the appropriate SME agents.
+                
+                You will NOT use triple backticks in your response.
                 
                 Example:
 
