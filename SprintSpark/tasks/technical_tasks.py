@@ -59,11 +59,12 @@ class TechnicalTasks:
                 raise ValueError("Expected delegation output to be a dictionary.")
 
             sme_tasks = []
+            i = 0
             for subtask, sme_name in crew_dict.items():
                 if sme_name not in self.sme_agents:
                     print(f"Warning: SME '{sme_name}' not recognized, skipping task '{subtask}'.")
                     continue
-
+                i += 1
                 sme_agent = self.sme_agents[sme_name]
                 sme_task = Task(
                     description=dedent(
@@ -77,6 +78,7 @@ class TechnicalTasks:
                     ),
                     tools=[crawl_repo_to_dict],
                     expected_output="Provide a completed resolution or analysis for the subtask.",
+                    output_file=f"/outputs/subtask_{i}.txt",
                     agent=sme_agent,
                 )
                 sme_tasks.append(sme_task)
