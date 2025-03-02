@@ -5,7 +5,6 @@ from SprintSpark.tools.JiraIssueDataTool import get_issue_data
 
 class IssueTasks:
     def fetch_issue_data_task(self, agent, ticket_key: str):
-
         return Task(
             description=dedent(
                 f"""
