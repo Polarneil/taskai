@@ -3,6 +3,8 @@ import os
 from dotenv import load_dotenv
 from textwrap import dedent
 
+from langtrace_python_sdk import langtrace
+
 from agents.general_agents import IssueAgents
 from agents.technical_agents import TechnicalAgents
 
@@ -12,6 +14,8 @@ from tasks.technical_tasks import TechnicalTasks
 from crewai.knowledge.source.string_knowledge_source import StringKnowledgeSource
 
 load_dotenv()
+
+# langtrace.init(api_key=os.getenv("LANGTRACE_API_KEY"))
 
 os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
@@ -34,7 +38,6 @@ class SprintSparkCrew:
         # Instantiate agents and tasks
         general_agents = IssueAgents()
         general_tasks = IssueTasks()
-
         technical_agents = TechnicalAgents()
 
         sme_agents = {
