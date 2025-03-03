@@ -38,7 +38,7 @@ def get_issue_data(ticket_key: str) -> dict:
             "id": response_dict.get("id"),
             "key": response_dict.get("key"),
             "summary": response_dict["fields"].get("summary"),
-            "description": response_dict["fields"].get("description", {}).get("content", [{}])[0].get("content", [{}])[0].get("text"),
+            "description": extract_text_from_description(response_dict["fields"].get("description")),
             "acceptance_criteria": extract_text_from_content(response_dict["fields"].get("customfield_10037")),
             "priority": response_dict["fields"].get("priority", {}).get("name"),
             "assignee": {
@@ -65,6 +65,30 @@ def get_issue_data(ticket_key: str) -> dict:
         return {"message": f"KeyError getting issue data for {ticket_key}: {e}"}
     except Exception as e:
         return {"message": f"An unexpected error occurred getting issue data for {ticket_key}: {e}"}
+
+
+def extract_text_from_description(data):
+    """
+    Extracts all text content from the Jira description field.
+    """
+    if not isinstance(data, dict) or "content" not in data:
+        return ""
+
+    content_list = data["content"]
+    extracted_texts = []
+
+    def _extract_recursive(content):
+        if isinstance(content, list):
+            for item in content:
+                _extract_recursive(item)
+        elif isinstance(content, dict):
+            if "text" in content and content["type"] == "text":
+                extracted_texts.append(content["text"])
+            elif "content" in content:
+                _extract_recursive(content["content"])
+
+    _extract_recursive(content_list)
+    return "".join(extracted_texts)
 
 
 def extract_text_from_content(data):

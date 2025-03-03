@@ -19,16 +19,6 @@ load_dotenv()
 
 os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
-# Create knowledge source
-directions = dedent(
-    f"""
-    - You will NOT include triple backticks (```) in any of your inputs or outputs.
-    """
-)
-direction_source = StringKnowledgeSource(
-    content=directions,
-)
-
 
 class SprintSparkCrew:
     def __init__(self, ticket_key: str):
@@ -71,7 +61,6 @@ class SprintSparkCrew:
         delegation_crew = Crew(
             agents=[processor_router_agent, technical_analyst_agent],
             tasks=[fetch_issue_data_task, decompose_issue_task, delegate_task],
-            knowledge_sources=[direction_source],
             verbose=True,
         )
 
@@ -88,7 +77,6 @@ class SprintSparkCrew:
         sme_crew = Crew(
             agents=list(sme_agents.values()),  # Add all SME agents
             tasks=assigned_sme_tasks,  # Assign dynamically created SME tasks
-            knowledge_sources=[direction_source],
             verbose=True,
         )
 
