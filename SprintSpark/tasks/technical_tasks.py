@@ -77,8 +77,8 @@ class TechnicalTasks:
                         """
                     ),
                     tools=[crawl_repo_to_dict],
-                    expected_output="Provide a completed resolution or analysis for the subtask. Provide any code files/snippets if applicable. Format your responses in markdown.",
-                    output_file=f"/outputs/subtask_{i}.md",
+                    expected_output="Provide the completed work for this subtask. Provide any code files/snippets if applicable. Format your responses in markdown.",
+                    output_file=f"/outputs/subtask_{i}.txt",
                     agent=sme_agent,
                 )
                 sme_tasks.append(sme_task)
