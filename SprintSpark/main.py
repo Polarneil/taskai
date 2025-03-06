@@ -11,8 +11,6 @@ from agents.technical_agents import TechnicalAgents
 from tasks.general_tasks import IssueTasks
 from tasks.technical_tasks import TechnicalTasks
 
-from crewai.knowledge.source.string_knowledge_source import StringKnowledgeSource
-
 load_dotenv()
 
 # langtrace.init(api_key=os.getenv("LANGTRACE_API_KEY"))
@@ -82,7 +80,29 @@ class SprintSparkCrew:
 
         sme_results = sme_crew.kickoff()
 
-        return {"Delegation": delegation_result.raw, "SME Work": sme_results.raw}
+        # Deliverable Crew
+
+        collector_agent = general_agents.collector_agent()
+        reporter_agent = general_agents.reporter_agent()
+
+        fetch_issue_data_task_1 = general_tasks.fetch_issue_data_task_1(
+            collector_agent,
+            self.ticket_key
+        )
+
+        fetch_subtask_output_task = general_tasks.fetch_subtask_output_task(collector_agent)
+
+        generate_report_task = general_tasks.generate_report_task(reporter_agent)
+
+        deliverable_crew = Crew(
+            agents=[collector_agent, reporter_agent],
+            tasks=[fetch_issue_data_task_1, fetch_subtask_output_task, generate_report_task],
+            verbose=True,
+        )
+
+        deliverable_results = deliverable_crew.kickoff()
+
+        return deliverable_results
 
 
 # Call the crew

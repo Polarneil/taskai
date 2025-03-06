@@ -17,3 +17,34 @@ class IssueAgents:
             verbose=True,
             llm=self.models.OpenAIGPT4o,
         )
+
+    def collector_agent(self):
+        return Agent(
+            role="Data Collector",
+            backstory=dedent(f"""You have worked in data collection for your entire career."""),
+            goal=dedent(
+                f"""
+                Your goal is to fetch necessary data from a Jira ticket and various task outputs to feed a Reporter
+                Agent who will generate a report based on the data you fetched.
+                """
+            ),
+            allow_delegation=False,
+            verbose=True,
+            llm=self.models.OpenAIGPT4o,
+        )
+
+    def reporter_agent(self):
+        return Agent(
+            role="Reporter",
+            backstory=dedent(f"""You are providing a developer with a head start on a Jira issue assigned to them."""),
+            goal=dedent(
+                f"""
+                Your goal is to cohesive summary of the subtask outputs so that the developer can be provided with a
+                head start on the Jira issue assigned to them. You will make sure your summary ties back to the initial
+                Jira issue fetched from the Collector Agent.
+                """
+            ),
+            allow_delegation=False,
+            verbose=True,
+            llm=self.models.OpenAIGPT4o,
+        )

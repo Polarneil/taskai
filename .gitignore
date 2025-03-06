@@ -1,4 +1,5 @@
 .env
 .venv
 testing
-outputs
+subtask_outputs
+summary_reports
