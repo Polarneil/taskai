@@ -1,11 +1,11 @@
 from crewai import Agent
 from textwrap import dedent
-from SprintSpark.llm.llm import LLM
+from SprintSpark.llm.llm import MODELS
 
 
 class IssueAgents:
     def __init__(self):
-        self.models = LLM()
+        self.models = MODELS()
 
     def processor_router_agent(self):
         return Agent(
@@ -15,7 +15,7 @@ class IssueAgents:
             agents."""),
             allow_delegation=False,
             verbose=True,
-            llm=self.models.OpenAIGPT4o,
+            llm=self.models.Gemini2Flash,
         )
 
     def collector_agent(self):
@@ -30,7 +30,7 @@ class IssueAgents:
             ),
             allow_delegation=False,
             verbose=True,
-            llm=self.models.OpenAIGPT4o,
+            llm=self.models.LLAMA_3_1_8B,
         )
 
     def reporter_agent(self):
@@ -46,5 +46,5 @@ class IssueAgents:
             ),
             allow_delegation=False,
             verbose=True,
-            llm=self.models.OpenAIGPT4o,
+            llm=self.models.OpenAIGPTo3mini,
         )

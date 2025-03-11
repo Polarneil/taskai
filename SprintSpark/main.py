@@ -1,5 +1,4 @@
 from crewai import Crew
-import os
 from dotenv import load_dotenv
 from textwrap import dedent
 
@@ -16,8 +15,6 @@ from tools.AttachNotifyTool import attach_and_notify
 load_dotenv()
 
 # langtrace.init(api_key=os.getenv("LANGTRACE_API_KEY"))
-
-os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
 
 class SprintSparkCrew:

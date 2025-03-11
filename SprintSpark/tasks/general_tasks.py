@@ -37,7 +37,7 @@ class IssueTasks:
                 You will utilize the output from the `fetch_issue_data_task`.
                 """
             ),
-            expected_output="The expected output of this tast is a decomposition of the Jira issue.",
+            expected_output="The expected output of this task is a decomposition of the Jira issue.",
             agent=agent,
         )
 
@@ -67,7 +67,7 @@ class IssueTasks:
                 """
             ),
             tools=[get_text_files],
-            expected_output="The expected output of the task is a message indicating success or failure",
+            expected_output="The expected output of the task is a simple message indicating success or failure",
             agent=agent,
         )
 
@@ -79,8 +79,13 @@ class IssueTasks:
                 be a cohesive summary of the subtask subtask_outputs so that the developer can be provided with a head start on
                 the Jira issue assigned to them.
                 
+                The report should include any code snippets from the subtask outputs.
+                
                 You will leverage the Jira issue data returned from the `fetch_issue_data_task_1` and the subtask outputs
                 returned from the `FetchSubtaskOutputTool` in the `fetch_subtask_output_task`.
+                
+                The users will not have access to the subtask outputs, so you need to ensure to pull in all content from
+                the subtask outputs into you final report. This includes all code snippets.
                 """
             ),
             expected_output="The expected output of the task is a cohesive summary of the subtask subtask_outputs formatted in markdown without triple backticks before and after the content.",

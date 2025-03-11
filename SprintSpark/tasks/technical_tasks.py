@@ -78,15 +78,15 @@ class TechnicalTasks:
                         You will make sure to provide the modified code change in your Final Answer.
                         
                         DO NOT LEAVE OUT CODE SNIPPETS IF THE SUBTASK INVOLVES A CODE CHANGE REQUEST.
+                        
+                        YOU WILL NOT JUST SAY THAT THE CODE HAS BEEN MODFIIED, YOU WILL PROVIDE THE MODIFIED CODE.
                         """
                     ),
                     tools=[crawl_repo_to_dict],
                     expected_output=dedent(
                         f"""
-                        Provide the completed code for this subtask.
+                        Provide the completed code snippet for the subtask.
                         Format your responses in markdown.
-                        
-                        If the subtask does not involve code, provide a detailed explanation of the solution.
                         """
                     ),
                     output_file=f"/subtask_outputs/subtask_{i}.txt",

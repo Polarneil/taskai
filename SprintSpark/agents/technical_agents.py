@@ -1,11 +1,11 @@
 from crewai import Agent
 from textwrap import dedent
-from SprintSpark.llm.llm import LLM
+from SprintSpark.llm.llm import MODELS
 
 
 class TechnicalAgents:
     def __init__(self):
-        self.models = LLM()
+        self.models = MODELS()
 
     def technical_analyst_agent(self):
         return Agent(
@@ -28,8 +28,9 @@ class TechnicalAgents:
             backstory="You are an expert in software development, coding best practices, and software architecture.",
             goal=dedent(
                 f"""
-                Your goal is to provide expertise in software engineering and assist in solving related technical
-                issues. You will do this by writing code, providing code reviews, and offering technical guidance.
+                Your goal is to assist in software development tasks by writing code to solve complex problems.
+                
+                You will do this by writing code, providing code reviews, and offering technical guidance.
                 """
             ),
             allow_delegation=False,
