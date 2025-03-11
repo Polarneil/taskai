@@ -11,6 +11,8 @@ from agents.technical_agents import TechnicalAgents
 from tasks.general_tasks import IssueTasks
 from tasks.technical_tasks import TechnicalTasks
 
+from tools.AttachNotifyTool import attach_and_notify
+
 load_dotenv()
 
 # langtrace.init(api_key=os.getenv("LANGTRACE_API_KEY"))
@@ -19,8 +21,9 @@ os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
 
 class SprintSparkCrew:
-    def __init__(self, ticket_key: str):
+    def __init__(self, ticket_key: str, email: str):
         self.ticket_key = ticket_key
+        self.email = email
 
     def run(self):
         # Instantiate agents and tasks
@@ -102,14 +105,23 @@ class SprintSparkCrew:
 
         deliverable_results = deliverable_crew.kickoff()
 
+        # Attach and notify
+        attach_and_notify(
+            ticket_key=self.ticket_key,
+            receiver_email=self.email,
+            subject=f"Summary Report for {self.ticket_key}",
+            message="Please find the summary report attached.",
+        )
+
         return deliverable_results
 
 
 # Call the crew
 if __name__ == "__main__":
     tick_key = input(dedent("""Enter your ticket key: """))
+    email = input(dedent("""Enter your email: """))
 
-    sprint_spark_crew = SprintSparkCrew(tick_key)
+    sprint_spark_crew = SprintSparkCrew(tick_key, email)
     results = sprint_spark_crew.run()
     print("\n########################")
     print("## Results:")

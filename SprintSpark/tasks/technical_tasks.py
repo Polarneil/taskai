@@ -38,8 +38,8 @@ class TechnicalTasks:
                 Example:
 
                 {{
-                    "subtask & acceptance criteria": "Security SME",
-                    "subtask & acceptance criteria": "Data SME"
+                    "detailed subtask description": "Security SME",
+                    "detailed subtask description": "Data SME"
                 }}
                 """
             ),
@@ -74,10 +74,21 @@ class TechnicalTasks:
                         You will utilize the git repo and ensure your solutions fit in with the current project
                         structure. You will call the `crawl_repo_to_dict` function from the `CrawlRepoTool` to analyze
                         the repository. You do not need to pass any arguments into this function.
+                        
+                        You will make sure to provide the modified code change in your Final Answer.
+                        
+                        DO NOT LEAVE OUT CODE SNIPPETS IF THE SUBTASK INVOLVES A CODE CHANGE REQUEST.
                         """
                     ),
                     tools=[crawl_repo_to_dict],
-                    expected_output="Provide the completed work for this subtask. Provide any code files/snippets if applicable. Format your responses in markdown.",
+                    expected_output=dedent(
+                        f"""
+                        Provide the completed code for this subtask.
+                        Format your responses in markdown.
+                        
+                        If the subtask does not involve code, provide a detailed explanation of the solution.
+                        """
+                    ),
                     output_file=f"/subtask_outputs/subtask_{i}.txt",
                     agent=sme_agent,
                 )

@@ -29,7 +29,7 @@ class TechnicalAgents:
             goal=dedent(
                 f"""
                 Your goal is to provide expertise in software engineering and assist in solving related technical
-                issues.
+                issues. You will do this by writing code, providing code reviews, and offering technical guidance.
                 """
             ),
             allow_delegation=False,

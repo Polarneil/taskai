@@ -3,10 +3,13 @@ from crewai.tools import tool
 
 
 @tool("FetchSubtaskOutputTool")
-def get_text_files(directory_path: str = "../subtask_outputs") -> dict:
+def get_text_files() -> dict:
     """
     Retrieves a dictionary of .txt files in a given directory with file names as keys and file contents as values.
     """
+
+    directory_path: str = "./subtask_outputs"
+
     try:
         text_files = {}
         for f in os.listdir(directory_path):

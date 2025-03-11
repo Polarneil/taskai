@@ -29,6 +29,9 @@ class IssueTasks:
                 Your task is to decompose the Jira issue into various subtasks. If the issue is small, do not
                 feel the need to decompose any further.
                 
+                You will keep attempt to keep the volume of subtaksks to a minimum. Between 3-5 subtasks tends to be
+                sufficient.
+                
                 Ensure your subtasks follow development best practices.
                 
                 You will utilize the output from the `fetch_issue_data_task`.
@@ -60,7 +63,7 @@ class IssueTasks:
             description=dedent(
                 f"""
                 Your task is to fetch the output of various subtasks. You will do this by calling the `get_text_files`
-                function from the `FetchSubtaskOutputTool`.
+                function from the `FetchSubtaskOutputTool`. You do not need to pass any arguments into this function.
                 """
             ),
             tools=[get_text_files],
@@ -80,7 +83,7 @@ class IssueTasks:
                 returned from the `FetchSubtaskOutputTool` in the `fetch_subtask_output_task`.
                 """
             ),
-            expected_output="The expected output of the task is a cohesive summary of the subtask subtask_outputs formatted in markdown.",
+            expected_output="The expected output of the task is a cohesive summary of the subtask subtask_outputs formatted in markdown without triple backticks before and after the content.",
             output_file=f"/summary_reports/report.md",
             agent=agent,
         )
