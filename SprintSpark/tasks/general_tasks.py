@@ -67,7 +67,7 @@ class IssueTasks:
                 """
             ),
             tools=[get_text_files],
-            expected_output="The expected output of the task is a simple message indicating success or failure",
+            expected_output="The expected output of the task is a simple message indicating success or failure. No more than a sentence.",
             agent=agent,
         )
 
@@ -79,7 +79,7 @@ class IssueTasks:
                 be a cohesive summary of the subtask subtask_outputs so that the developer can be provided with a head start on
                 the Jira issue assigned to them.
                 
-                The report should include any code snippets from the subtask outputs.
+                The report should include all code snippets from the subtask outputs returned from the `FetchSubtaskOutputTool` tool.
                 
                 You will leverage the Jira issue data returned from the `fetch_issue_data_task_1` and the subtask outputs
                 returned from the `FetchSubtaskOutputTool` in the `fetch_subtask_output_task`.

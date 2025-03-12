@@ -1,6 +1,7 @@
 from crewai import Crew
 from dotenv import load_dotenv
 from textwrap import dedent
+import os
 
 from langtrace_python_sdk import langtrace
 
@@ -78,12 +79,11 @@ class SprintSparkCrew:
             verbose=True,
         )
 
-        sme_results = sme_crew.kickoff()
+        sme_crew.kickoff()
 
         # Deliverable Crew
 
-        collector_agent = general_agents.collector_agent()
-        reporter_agent = general_agents.reporter_agent()
+        collector_agent = general_agents.collector_reporter_agent()
 
         fetch_issue_data_task_1 = general_tasks.fetch_issue_data_task_1(
             collector_agent,
@@ -92,10 +92,10 @@ class SprintSparkCrew:
 
         fetch_subtask_output_task = general_tasks.fetch_subtask_output_task(collector_agent)
 
-        generate_report_task = general_tasks.generate_report_task(reporter_agent)
+        generate_report_task = general_tasks.generate_report_task(collector_agent)
 
         deliverable_crew = Crew(
-            agents=[collector_agent, reporter_agent],
+            agents=[collector_agent],
             tasks=[fetch_issue_data_task_1, fetch_subtask_output_task, generate_report_task],
             verbose=True,
         )
