@@ -79,7 +79,7 @@ class TechnicalTasks:
                         
                         DO NOT LEAVE OUT CODE SNIPPETS IF THE SUBTASK INVOLVES A CODE CHANGE REQUEST.
                         
-                        YOU WILL NOT JUST SAY THAT THE CODE HAS BEEN MODFIIED, YOU WILL PROVIDE THE MODIFIED CODE.
+                        YOU WILL NOT JUST SAY THAT THE CODE HAS BEEN MODFIED, YOU WILL PROVIDE THE MODIFIED CODE.
                         """
                     ),
                     tools=[crawl_repo_to_dict],

@@ -30,3 +30,6 @@ class MODELS:
             model="ollama/llama3.1:8b",
             base_url="http://localhost:11434",
         )
+        self.CLAUDE3_7SONNET = LLM(
+            model="bedrock/us.anthropic.claude-3-7-sonnet-20250219-v1:0",
+        )

@@ -15,7 +15,7 @@ class IssueAgents:
             agents."""),
             allow_delegation=False,
             verbose=True,
-            llm=self.models.Gemini2Flash,
+            llm=self.models.CLAUDE3_7SONNET,
         )
 
     def collector_agent(self):
@@ -46,5 +46,5 @@ class IssueAgents:
             ),
             allow_delegation=False,
             verbose=True,
-            llm=self.models.OpenAIGPTo3mini,
+            llm=self.models.CLAUDE3_7SONNET,
         )

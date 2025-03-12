@@ -19,7 +19,7 @@ class TechnicalAgents:
             ),
             allow_delegation=False,
             verbose=True,
-            llm=self.models.OpenAIGPT4o,
+            llm=self.models.CLAUDE3_7SONNET,
         )
 
     def software_engineering_sme(self):
@@ -35,7 +35,7 @@ class TechnicalAgents:
             ),
             allow_delegation=False,
             verbose=True,
-            llm=self.models.OpenAIGPT4o,
+            llm=self.models.CLAUDE3_7SONNET,
         )
 
     def data_sme(self):
@@ -45,7 +45,7 @@ class TechnicalAgents:
             goal="Your goal is to provide data-related insights and handle data pipeline and analysis tasks.",
             allow_delegation=False,
             verbose=True,
-            llm=self.models.OpenAIGPT4o,
+            llm=self.models.CLAUDE3_7SONNET,
         )
 
     def cloud_infrastructure_sme(self):
@@ -55,7 +55,7 @@ class TechnicalAgents:
             goal="Your goal is to advise on cloud architecture, security, and deployment strategies.",
             allow_delegation=False,
             verbose=True,
-            llm=self.models.OpenAIGPT4o,
+            llm=self.models.CLAUDE3_7SONNET,
         )
 
     def mobile_sme(self):
@@ -69,7 +69,7 @@ class TechnicalAgents:
             goal="Your goal is to assist in mobile development best practices and troubleshoot app-related issues.",
             allow_delegation=False,
             verbose=True,
-            llm=self.models.OpenAIGPT4o,
+            llm=self.models.CLAUDE3_7SONNET,
         )
 
     def security_sme(self):
@@ -79,7 +79,7 @@ class TechnicalAgents:
             goal="Your goal is to ensure security best practices are followed and to mitigate risks.",
             allow_delegation=False,
             verbose=True,
-            llm=self.models.OpenAIGPT4o,
+            llm=self.models.CLAUDE3_7SONNET,
         )
 
     def ui_xd_sme(self):
@@ -89,5 +89,5 @@ class TechnicalAgents:
             goal="Your goal is to ensure intuitive, accessible, and visually appealing design solutions.",
             allow_delegation=False,
             verbose=True,
-            llm=self.models.OpenAIGPT4o,
+            llm=self.models.CLAUDE3_7SONNET,
         )
