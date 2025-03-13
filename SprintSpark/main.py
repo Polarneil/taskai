@@ -116,9 +116,9 @@ class SprintSparkCrew:
 # Call the crew
 if __name__ == "__main__":
     tick_key = input(dedent("""Enter your ticket key: """))
-    email = input(dedent("""Enter your email: """))
+    user_email = input(dedent("""Enter your email: """))
 
-    sprint_spark_crew = SprintSparkCrew(tick_key, email)
+    sprint_spark_crew = SprintSparkCrew(tick_key, user_email)
     results = sprint_spark_crew.run()
     print("\n########################")
     print("## Results:")
