@@ -11,7 +11,7 @@ from agents.technical_agents import TechnicalAgents
 from tasks.general_tasks import IssueTasks
 from tasks.technical_tasks import TechnicalTasks
 
-from tools.AttachNotifyTool import attach_and_notify
+from tools.AttachNotifyTool import UserDelivery
 
 load_dotenv()
 
@@ -102,13 +102,15 @@ class SprintSparkCrew:
 
         deliverable_results = deliverable_crew.kickoff()
 
-        # Attach and notify
-        attach_and_notify(
+        # Attach and notify user
+        deliverer = UserDelivery(
             ticket_key=self.ticket_key,
             receiver_email=self.email,
             subject=f"Summary Report for {self.ticket_key}",
             message="Please find the summary report attached.",
         )
+
+        deliverer.attach_and_notify()
 
         return deliverable_results
 
