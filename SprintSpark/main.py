@@ -19,9 +19,27 @@ load_dotenv()
 
 
 class SprintSparkCrew:
-    def __init__(self, ticket_key: str, email: str):
+    def __init__(
+            self,
+            ticket_key: str,
+            email: str,
+
+            github_owner: str,
+            github_repo: str,
+            base_branch: str,
+            github_token: str,
+
+            local_report_path: str,
+    ):
         self.ticket_key = ticket_key
         self.email = email
+
+        self.github_owner = github_owner
+        self.github_repo = github_repo
+        self.base_branch = base_branch
+        self.github_token = github_token
+
+        self.local_report_path = local_report_path
 
     def run(self):
         # Instantiate agents and tasks
@@ -103,11 +121,28 @@ class SprintSparkCrew:
         deliverable_results = deliverable_crew.kickoff()
 
         # Attach and notify user
+        try:
+            with open(self.local_report_path, 'r') as file:
+                file_content = file.read()
+        except FileNotFoundError:
+            print(f"Error: File not found at {self.local_report_path}")
+            file_content = None
+
         deliverer = UserDelivery(
+            github_owner=self.github_owner,
+            github_repo=self.github_repo,
+            branch_name=f"feature/{self.ticket_key}",
+            base_branch=self.base_branch,
+            repo_file_path=f"TaskAI_Summary_Reports/{self.ticket_key}_report.md",
+            file_content=file_content,
+            commit_message=f"TaskAI Summary Report: {self.ticket_key}",
+            github_token=self.github_token,
+
             ticket_key=self.ticket_key,
             receiver_email=self.email,
             subject=f"Summary Report for {self.ticket_key}",
-            message="Please find the summary report attached.",
+            message=f"Please find the summary report for {self.ticket_key} attached.",
+            file_path=self.local_report_path,
         )
 
         deliverer.attach_and_notify()
@@ -117,10 +152,29 @@ class SprintSparkCrew:
 
 # Call the crew
 if __name__ == "__main__":
+
+    github_owner = os.getenv("GITHUB_OWNER")
+    github_repo = os.getenv("GITHUB_REPO")
+    base_branch = os.getenv("GITHUB_BASE_BRANCH")
+    github_token = os.getenv("GITHUB_TOKEN")
+
+    local_report_path = "./summary_reports/report.md"
+
     tick_key = input(dedent("""Enter your ticket key: """))
     user_email = input(dedent("""Enter your email: """))
 
-    sprint_spark_crew = SprintSparkCrew(tick_key, user_email)
+    sprint_spark_crew = SprintSparkCrew(
+        ticket_key=tick_key,
+        email=user_email,
+
+        github_owner=github_owner,
+        github_repo=github_repo,
+        base_branch=base_branch,
+        github_token=github_token,
+
+        local_report_path=local_report_path
+    )
+
     results = sprint_spark_crew.run()
     print("\n########################")
     print("## Results:")
